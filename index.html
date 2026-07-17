@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel de projetos do Laboratório de Inovação Digital da UnDF">
+  <title>Painel de Projetos | UnDF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/principal.js" defer></script>
+</head>
+<body>
+  <!-- Cabeçalho do painel -->
+  <header class="cabecalho">
+    <div class="limite cabecalho-conteudo">
+      <div class="logo" aria-label="Universidade do Distrito Federal">
+        <span class="logo-simbolo" aria-hidden="true">U</span>
+        <div>
+          <strong>UnDF</strong>
+          <small>Universidade do Distrito Federal</small>
+        </div>
+      </div>
+
+      <div class="titulo-pagina">
+        <h1>Painel de Projetos</h1>
+        <p>Laboratório de Inovação Digital</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="limite conteudo">
+    <p id="aviso" class="aviso">Carregando os dados...</p>
+
+    <!-- Os cartões são preenchidos pelo JavaScript -->
+    <section id="resumo" class="resumo" aria-label="Resumo dos projetos"></section>
+
+    <!-- Área usada para pesquisar e filtrar a lista -->
+    <section class="filtros" aria-label="Filtros dos projetos">
+      <div class="campo campo-busca">
+        <label for="busca">Buscar projeto</label>
+        <input id="busca" type="search" placeholder="Digite o nome do projeto">
+      </div>
+
+      <div class="campo">
+        <label for="area">Área</label>
+        <select id="area">
+          <option value="">Todas as áreas</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="situacao">Situação</label>
+        <select id="situacao">
+          <option value="">Todas</option>
+          <option value="com vagas">Com vagas</option>
+          <option value="vagas esgotadas">Vagas esgotadas</option>
+          <option value="encerrado">Encerrado</option>
+        </select>
+      </div>
+
+      <button id="limpar" class="botao-limpar" type="button">Limpar</button>
+    </section>
+
+    <div class="paineis">
+      <section class="painel">
+        <div class="painel-topo">
+          <h2>Projetos</h2>
+          <span id="quantidade"></span>
+        </div>
+        <div id="lista-projetos" class="lista-projetos"></div>
+      </section>
+
+      <aside class="painel detalhes">
+        <h2>Detalhes do projeto</h2>
+        <div id="detalhes-projeto" class="detalhes-conteudo">
+          <p class="mensagem">Selecione um projeto para ver mais informações.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>Laboratório de Inovação Digital - UnDF</p>
+  </footer>
+</body>
+</html>
