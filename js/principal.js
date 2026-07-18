@@ -107,14 +107,27 @@ function preencherAreas() {
 // Retorna somente os projetos que combinam com os três filtros.
 function filtrarProjetos() {
   const textoBuscado = prepararPesquisa(elementos.busca.value.trim());
+  const ordemSituacoes = {
+    "com vagas": 1,
+    "vagas esgotadas": 2,
+    "encerrado": 3
+  };
 
-  return estado.projetos.filter((projeto) => {
-    const nomeCombina = prepararPesquisa(projeto.nome).includes(textoBuscado);
-    const areaCombina = !elementos.area.value || projeto.area === elementos.area.value;
-    const situacaoCombina = !elementos.situacao.value || projeto.situacao === elementos.situacao.value;
+  return estado.projetos
+    .filter((projeto) => {
+      const nomeCombina = prepararPesquisa(projeto.nome).includes(textoBuscado);
+      const areaCombina = !elementos.area.value || projeto.area === elementos.area.value;
+      const situacaoCombina = !elementos.situacao.value || projeto.situacao === elementos.situacao.value;
 
-    return nomeCombina && areaCombina && situacaoCombina;
-  });
+      return nomeCombina && areaCombina && situacaoCombina;
+    })
+    .sort((primeiro, segundo) => {
+      const diferencaSituacao = ordemSituacoes[primeiro.situacao] - ordemSituacoes[segundo.situacao];
+
+      if (diferencaSituacao !== 0) return diferencaSituacao;
+
+      return primeiro.nome.localeCompare(segundo.nome, "pt-BR");
+    });
 }
 
 function listarFiltrosAtivos() {
@@ -365,7 +378,7 @@ async function carregarDados() {
     validarDados(dados);
     estado.projetos = dados.projetos;
     estado.inscricoes = dados.inscricoes;
-    estado.projetoSelecionado = estado.projetos[0]?.id ?? null;
+    estado.projetoSelecionado = null;
 
     encerrarCarregamento();
     mostrarResumo();
