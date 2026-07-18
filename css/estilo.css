@@ -477,6 +477,36 @@ select {
   color: var(--vermelho);
 }
 
+.mensagem h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.mensagem p {
+  margin: 0;
+}
+
+.botao-tentar {
+  min-height: 42px;
+  margin-top: 16px;
+  padding: 0 18px;
+  background-color: var(--vermelho);
+  border: 0;
+  border-radius: 8px;
+  color: var(--branco);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.botao-tentar:hover {
+  background-color: #84302b;
+}
+
+.botao-tentar:focus {
+  outline: 3px solid rgba(168, 59, 53, 0.25);
+  outline-offset: 2px;
+}
+
 /* Formas exibidas enquanto os dados estão carregando */
 .skeleton {
   display: block;

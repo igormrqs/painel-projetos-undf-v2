@@ -94,6 +94,8 @@ function mostrarResumo() {
 function preencherAreas() {
   const areas = [...new Set(estado.projetos.map((projeto) => projeto.area))].sort();
 
+  elementos.area.innerHTML = '<option value="">Todas as áreas</option>';
+
   areas.forEach((area) => {
     const opcao = document.createElement("option");
     opcao.value = area;
@@ -284,17 +286,64 @@ function encerrarCarregamento() {
   elementos.detalhes.setAttribute("aria-busy", "false");
 }
 
+// Confere o básico antes de usar as informações do arquivo.
+function validarDados(dados) {
+  if (!dados || !Array.isArray(dados.projetos) || !Array.isArray(dados.inscricoes)) {
+    throw new Error("O arquivo de dados está incompleto.");
+  }
+
+  const projetoInvalido = dados.projetos.some((projeto) => (
+    projeto.id == null || !projeto.nome || !projeto.area || !projeto.totalVagas || !projeto.situacao
+  ));
+
+  const inscricaoInvalida = dados.inscricoes.some((inscricao) => (
+    inscricao.id == null || inscricao.projetoId == null || !inscricao.nome
+  ));
+
+  if (projetoInvalido || inscricaoInvalida) {
+    throw new Error("Existem projetos ou inscrições com informações faltando.");
+  }
+}
+
+function mostrarErroCarregamento() {
+  bloquearFiltros(true);
+  elementos.aviso.textContent = "Ocorreu um erro ao carregar os dados.";
+  elementos.aviso.classList.add("erro");
+  elementos.quantidade.textContent = "Dados indisponíveis";
+
+  elementos.resumo.innerHTML = Array.from({ length: 4 }, () => `
+    <article class="cartao-resumo">
+      <span>Indisponível</span>
+      <strong>--</strong>
+      <small>Não foi possível calcular</small>
+    </article>
+  `).join("");
+
+  elementos.lista.innerHTML = `
+    <div class="mensagem erro" role="alert">
+      <h3>Não foi possível carregar os projetos</h3>
+      <p>Confira a conexão ou o arquivo de dados e tente novamente.</p>
+      <button class="botao-tentar" type="button" data-acao="tentar-novamente">Tentar novamente</button>
+    </div>
+  `;
+
+  elementos.detalhes.innerHTML = `
+    <p class="mensagem erro">Os detalhes ficarão disponíveis quando os dados forem carregados.</p>
+  `;
+}
+
 async function carregarDados() {
   mostrarCarregamento();
 
   try {
-    const resposta = await fetch("dados/projetos.json");
+    const resposta = await fetch("dados/projetos.json", { cache: "no-store" });
 
     if (!resposta.ok) {
       throw new Error("Não foi possível abrir o arquivo de dados.");
     }
 
     const dados = await resposta.json();
+    validarDados(dados);
     estado.projetos = dados.projetos;
     estado.inscricoes = dados.inscricoes;
     estado.projetoSelecionado = estado.projetos[0]?.id ?? null;
@@ -305,16 +354,7 @@ async function carregarDados() {
     atualizarPainel();
   } catch (erro) {
     encerrarCarregamento();
-    elementos.aviso.textContent = "Ocorreu um erro ao carregar os dados.";
-    elementos.aviso.classList.add("erro");
-    elementos.resumo.innerHTML = "";
-    elementos.quantidade.textContent = "";
-    elementos.lista.innerHTML = `
-      <p class="mensagem erro">Confira se o projeto foi aberto com um servidor local e tente novamente.</p>
-    `;
-    elementos.detalhes.innerHTML = `
-      <p class="mensagem erro">Os detalhes não puderam ser carregados.</p>
-    `;
+    mostrarErroCarregamento();
   }
 }
 
@@ -326,6 +366,13 @@ elementos.limpar.addEventListener("click", limparFiltros);
 
 // Um único evento atende todos os botões da lista.
 elementos.lista.addEventListener("click", (evento) => {
+  const acao = evento.target.closest("[data-acao]");
+
+  if (acao?.dataset.acao === "tentar-novamente") {
+    carregarDados();
+    return;
+  }
+
   const botao = evento.target.closest("[data-projeto-id]");
 
   if (!botao) return;
