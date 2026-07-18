@@ -2,7 +2,8 @@
 const estado = {
   projetos: [],
   inscricoes: [],
-  projetoSelecionado: null
+  projetoSelecionado: null,
+  carregando: true
 };
 
 // Elementos que serão alterados várias vezes.
@@ -231,7 +232,61 @@ function limparFiltros() {
   elementos.busca.focus();
 }
 
+function bloquearFiltros(bloqueado) {
+  elementos.busca.disabled = bloqueado;
+  elementos.area.disabled = bloqueado;
+  elementos.situacao.disabled = bloqueado;
+  elementos.limpar.disabled = bloqueado;
+}
+
+// Mostra formas simples no lugar do conteúdo enquanto o JSON é aberto.
+function mostrarCarregamento() {
+  estado.carregando = true;
+  bloquearFiltros(true);
+
+  elementos.aviso.classList.remove("erro");
+  elementos.aviso.textContent = "Carregando projetos e inscrições...";
+  elementos.quantidade.textContent = "Carregando...";
+
+  elementos.resumo.setAttribute("aria-busy", "true");
+  elementos.lista.setAttribute("aria-busy", "true");
+  elementos.detalhes.setAttribute("aria-busy", "true");
+
+  elementos.resumo.innerHTML = Array.from({ length: 4 }, () => `
+    <div class="cartao-resumo cartao-carregando" aria-hidden="true">
+      <span class="skeleton skeleton-titulo"></span>
+      <span class="skeleton skeleton-valor"></span>
+      <span class="skeleton skeleton-texto"></span>
+    </div>
+  `).join("");
+
+  elementos.lista.innerHTML = `
+    <div class="lista-carregando" aria-hidden="true">
+      ${'<span class="skeleton skeleton-linha"></span>'.repeat(6)}
+    </div>
+  `;
+
+  elementos.detalhes.innerHTML = `
+    <div class="detalhes-carregando" aria-hidden="true">
+      <span class="skeleton skeleton-detalhe-titulo"></span>
+      <span class="skeleton skeleton-detalhe-texto"></span>
+      <span class="skeleton skeleton-detalhe-bloco"></span>
+    </div>
+  `;
+}
+
+function encerrarCarregamento() {
+  estado.carregando = false;
+  bloquearFiltros(false);
+
+  elementos.resumo.setAttribute("aria-busy", "false");
+  elementos.lista.setAttribute("aria-busy", "false");
+  elementos.detalhes.setAttribute("aria-busy", "false");
+}
+
 async function carregarDados() {
+  mostrarCarregamento();
+
   try {
     const resposta = await fetch("dados/projetos.json");
 
@@ -244,15 +299,21 @@ async function carregarDados() {
     estado.inscricoes = dados.inscricoes;
     estado.projetoSelecionado = estado.projetos[0]?.id ?? null;
 
+    encerrarCarregamento();
     mostrarResumo();
     preencherAreas();
     atualizarPainel();
   } catch (erro) {
+    encerrarCarregamento();
     elementos.aviso.textContent = "Ocorreu um erro ao carregar os dados.";
     elementos.aviso.classList.add("erro");
+    elementos.resumo.innerHTML = "";
     elementos.quantidade.textContent = "";
     elementos.lista.innerHTML = `
       <p class="mensagem erro">Confira se o projeto foi aberto com um servidor local e tente novamente.</p>
+    `;
+    elementos.detalhes.innerHTML = `
+      <p class="mensagem erro">Os detalhes não puderam ser carregados.</p>
     `;
   }
 }
