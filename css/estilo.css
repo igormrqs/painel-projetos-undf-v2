@@ -31,6 +31,26 @@ body {
   line-height: 1.5;
 }
 
+/* Aparece quando a pessoa navega usando o teclado */
+.pular-conteudo {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-150%);
+}
+
+.pular-conteudo:focus {
+  transform: translateY(0);
+}
+
 button,
 input,
 select {
@@ -40,6 +60,13 @@ select {
 button,
 select {
   cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Limita a largura do conteúdo em telas grandes. */
@@ -222,11 +249,13 @@ select {
   font-size: 14px;
 }
 
+:focus-visible {
+  outline: 3px solid #b45309;
+  outline-offset: 3px;
+}
+
 .campo input:focus,
-.campo select:focus,
-.botao-limpar:focus,
-.projeto-item:focus {
-  outline: 3px solid rgba(23, 105, 170, 0.22);
+.campo select:focus {
   border-color: var(--azul);
 }
 

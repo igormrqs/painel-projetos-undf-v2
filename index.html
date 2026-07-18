@@ -12,6 +12,8 @@
   <script src="js/principal.js" defer></script>
 </head>
 <body>
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
   <!-- Cabeçalho do painel -->
   <header class="cabecalho">
     <div class="limite cabecalho-conteudo">
@@ -30,11 +32,11 @@
     </div>
   </header>
 
-  <main class="limite conteudo">
-    <p id="aviso" class="aviso">Carregando os dados...</p>
+  <main id="conteudo" class="limite conteudo">
+    <p id="aviso" class="aviso" role="status" aria-live="polite" aria-atomic="true">Carregando os dados...</p>
 
     <!-- Os cartões são preenchidos pelo JavaScript -->
-    <section id="resumo" class="resumo" aria-label="Resumo dos projetos"></section>
+    <section id="resumo" class="resumo" aria-label="Resumo dos projetos" aria-busy="true"></section>
 
     <!-- Área usada para pesquisar e filtrar a lista -->
     <section class="filtros" aria-label="Filtros dos projetos">
@@ -64,17 +66,17 @@
     </section>
 
     <div class="paineis">
-      <section class="painel">
+      <section class="painel" aria-labelledby="titulo-projetos">
         <div class="painel-topo">
-          <h2>Projetos</h2>
-          <span id="quantidade"></span>
+          <h2 id="titulo-projetos">Projetos</h2>
+          <span id="quantidade" aria-live="polite"></span>
         </div>
-        <div id="lista-projetos" class="lista-projetos"></div>
+        <div id="lista-projetos" class="lista-projetos" aria-busy="true"></div>
       </section>
 
-      <aside class="painel detalhes">
-        <h2>Detalhes do projeto</h2>
-        <div id="detalhes-projeto" class="detalhes-conteudo">
+      <aside class="painel detalhes" aria-labelledby="titulo-detalhes">
+        <h2 id="titulo-detalhes">Detalhes do projeto</h2>
+        <div id="detalhes-projeto" class="detalhes-conteudo" aria-live="polite" aria-busy="true">
           <p class="mensagem">Selecione um projeto para ver mais informações.</p>
         </div>
       </aside>

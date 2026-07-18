@@ -55,7 +55,15 @@ function criarBarra(projeto) {
   const porcentagem = Math.min((inscritos / projeto.totalVagas) * 100, 100);
 
   return `
-    <div class="barra" aria-label="${inscritos} de ${projeto.totalVagas} vagas ocupadas">
+    <div
+      class="barra"
+      role="progressbar"
+      aria-label="Ocupação das vagas"
+      aria-valuemin="0"
+      aria-valuemax="${projeto.totalVagas}"
+      aria-valuenow="${inscritos}"
+      aria-valuetext="${inscritos} de ${projeto.totalVagas} vagas ocupadas"
+    >
       <div class="barra-preenchida" style="width: ${porcentagem}%"></div>
     </div>
   `;
@@ -168,6 +176,7 @@ function mostrarProjetos() {
         type="button"
         data-projeto-id="${projeto.id}"
         aria-pressed="${selecionado}"
+        aria-controls="detalhes-projeto"
       >
         <span>
           <span class="projeto-nome">${protegerTexto(projeto.nome)}</span>
@@ -414,9 +423,15 @@ elementos.lista.addEventListener("click", (evento) => {
 
   if (!botao) return;
 
-  estado.projetoSelecionado = Number(botao.dataset.projetoId);
+  const projetoId = Number(botao.dataset.projetoId);
+
+  estado.projetoSelecionado = projetoId;
   mostrarProjetos();
-  mostrarDetalhes(estado.projetoSelecionado);
+  mostrarDetalhes(projetoId);
+
+  // A lista é recriada, então o foco precisa voltar para o botão selecionado.
+  const novoBotao = elementos.lista.querySelector(`[data-projeto-id="${projetoId}"]`);
+  novoBotao?.focus();
 });
 
 carregarDados();
