@@ -91,35 +91,50 @@ select:disabled {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.logo-simbolo {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: linear-gradient(145deg, var(--azul), #46a5d8);
-  color: var(--branco);
-  font-size: 24px;
-  font-weight: 700;
+.logo-marca {
+  display: flex;
+  align-items: center;
 }
 
-.logo strong,
-.logo small {
+.logo-marca i {
   display: block;
+  width: 22px;
+  height: 22px;
+  margin-right: -5px;
+  border-radius: 3px;
+  background-color: var(--azul);
+  transform: rotate(45deg);
 }
 
-.logo strong {
-  font-size: 22px;
-  line-height: 1.1;
+.logo-marca i:nth-child(2) {
+  background-color: #459dd1;
 }
 
-.logo small {
-  max-width: 150px;
+.logo-marca i:nth-child(3) {
+  margin-right: 0;
+  background-color: #82c7ec;
+}
+
+.logo-nome {
+  display: flex;
+  flex-direction: column;
+  font-family: "Sora", "Inter", Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.logo-nome small {
+  max-width: 152px;
+  margin-top: 4px;
   color: var(--texto-claro);
-  font-size: 10px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
   line-height: 1.25;
   text-transform: uppercase;
 }
