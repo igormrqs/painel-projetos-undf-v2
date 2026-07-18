@@ -117,6 +117,17 @@ function filtrarProjetos() {
   });
 }
 
+function listarFiltrosAtivos() {
+  const filtros = [];
+  const busca = elementos.busca.value.trim();
+
+  if (busca) filtros.push(`busca “${busca}”`);
+  if (elementos.area.value) filtros.push(elementos.area.value);
+  if (elementos.situacao.value) filtros.push(elementos.situacao.value);
+
+  return filtros;
+}
+
 function mostrarProjetos() {
   const projetosFiltrados = filtrarProjetos();
   const palavraProjeto = projetosFiltrados.length === 1 ? "projeto" : "projetos";
@@ -125,7 +136,11 @@ function mostrarProjetos() {
 
   if (projetosFiltrados.length === 0) {
     elementos.lista.innerHTML = `
-      <p class="mensagem">Nenhum projeto foi encontrado. Tente mudar ou limpar os filtros.</p>
+      <div class="mensagem vazio">
+        <h3>Nenhum projeto foi encontrado</h3>
+        <p>Tente mudar o termo de busca ou limpar os filtros para ver a lista novamente.</p>
+        <button class="botao-limpar" type="button" data-acao="limpar-filtros">Limpar filtros</button>
+      </div>
     `;
     return;
   }
@@ -209,6 +224,7 @@ function mostrarDetalhes(projetoId) {
 
 function atualizarPainel() {
   const projetosFiltrados = filtrarProjetos();
+  const filtrosAtivos = listarFiltrosAtivos();
 
   // Se o projeto selecionado sumir com um filtro, seleciona o primeiro resultado.
   const selecionadoAindaAparece = projetosFiltrados.some(
@@ -222,8 +238,10 @@ function atualizarPainel() {
   mostrarProjetos();
   mostrarDetalhes(estado.projetoSelecionado);
 
-  const temFiltro = elementos.busca.value || elementos.area.value || elementos.situacao.value;
-  elementos.aviso.textContent = temFiltro ? "A lista está mostrando os filtros escolhidos." : "Visão geral do semestre";
+  elementos.limpar.hidden = filtrosAtivos.length === 0;
+  elementos.aviso.textContent = filtrosAtivos.length
+    ? `Filtros ativos: ${filtrosAtivos.join(" · ")} · ${projetosFiltrados.length} ${projetosFiltrados.length === 1 ? "resultado" : "resultados"}`
+    : "Visão geral do semestre";
 }
 
 function limparFiltros() {
@@ -245,6 +263,7 @@ function bloquearFiltros(bloqueado) {
 function mostrarCarregamento() {
   estado.carregando = true;
   bloquearFiltros(true);
+  elementos.limpar.hidden = true;
 
   elementos.aviso.classList.remove("erro");
   elementos.aviso.textContent = "Carregando projetos e inscrições...";
@@ -370,6 +389,11 @@ elementos.lista.addEventListener("click", (evento) => {
 
   if (acao?.dataset.acao === "tentar-novamente") {
     carregarDados();
+    return;
+  }
+
+  if (acao?.dataset.acao === "limpar-filtros") {
+    limparFiltros();
     return;
   }
 

@@ -477,6 +477,12 @@ select {
   color: var(--vermelho);
 }
 
+.mensagem.vazio {
+  background-color: var(--azul-claro);
+  border-color: #b8d5e9;
+  color: var(--azul-escuro);
+}
+
 .mensagem h3 {
   margin: 0 0 7px;
   font-size: 17px;
@@ -484,6 +490,10 @@ select {
 
 .mensagem p {
   margin: 0;
+}
+
+.mensagem .botao-limpar {
+  margin-top: 16px;
 }
 
 .botao-tentar {
