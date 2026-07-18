@@ -163,6 +163,7 @@ function mostrarProjetos() {
   if (projetosFiltrados.length === 0) {
     elementos.lista.innerHTML = `
       <div class="mensagem vazio">
+        <span class="icone-mensagem" aria-hidden="true">⌕</span>
         <h3>Nenhum projeto foi encontrado</h3>
         <p>Tente mudar o termo de busca ou limpar os filtros para ver a lista novamente.</p>
         <button class="botao-limpar" type="button" data-acao="limpar-filtros">Limpar filtros</button>
@@ -376,6 +377,7 @@ function mostrarErroCarregamento() {
 
   elementos.lista.innerHTML = `
     <div class="mensagem erro" role="alert">
+      <span class="icone-mensagem" aria-hidden="true">!</span>
       <h3>Não foi possível carregar os projetos</h3>
       <p>Confira a conexão ou o arquivo de dados e tente novamente.</p>
       <button class="botao-tentar" type="button" data-acao="tentar-novamente">Tentar novamente</button>

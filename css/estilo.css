@@ -527,6 +527,20 @@ select:disabled {
   color: var(--azul-escuro);
 }
 
+.icone-mensagem {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 14px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background-color: var(--branco);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .mensagem h3 {
   margin: 0 0 7px;
   font-size: 17px;
