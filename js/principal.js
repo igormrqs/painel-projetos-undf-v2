@@ -3,7 +3,8 @@ const estado = {
   projetos: [],
   inscricoes: [],
   projetoSelecionado: null,
-  carregando: true
+  carregando: true,
+  demonstracao: "normal"
 };
 
 // Elementos que serão alterados várias vezes.
@@ -16,7 +17,8 @@ const elementos = {
   limpar: document.querySelector("#limpar"),
   quantidade: document.querySelector("#quantidade"),
   lista: document.querySelector("#lista-projetos"),
-  detalhes: document.querySelector("#detalhes-projeto")
+  detalhes: document.querySelector("#detalhes-projeto"),
+  barraDemonstracao: document.querySelector("#barra-demonstracao")
 };
 
 // Evita que algum texto do JSON seja interpretado como parte do HTML.
@@ -121,7 +123,7 @@ function filtrarProjetos() {
     "encerrado": 3
   };
 
-  return estado.projetos
+  const projetosFiltrados = estado.projetos
     .filter((projeto) => {
       const nomeCombina = prepararPesquisa(projeto.nome).includes(textoBuscado);
       const areaCombina = !elementos.area.value || projeto.area === elementos.area.value;
@@ -136,6 +138,9 @@ function filtrarProjetos() {
 
       return primeiro.nome.localeCompare(segundo.nome, "pt-BR");
     });
+
+  // Permite mostrar o estado vazio sem alterar os dados ou os filtros.
+  return estado.demonstracao === "vazio" ? [] : projetosFiltrados;
 }
 
 function listarFiltrosAtivos() {
@@ -261,12 +266,21 @@ function atualizarPainel() {
   mostrarDetalhes(estado.projetoSelecionado);
 
   elementos.limpar.hidden = filtrosAtivos.length === 0;
-  elementos.aviso.textContent = filtrosAtivos.length
-    ? `Filtros ativos: ${filtrosAtivos.join(" · ")} · ${projetosFiltrados.length} ${projetosFiltrados.length === 1 ? "resultado" : "resultados"}`
-    : "Visão geral do semestre";
+  if (estado.demonstracao === "vazio") {
+    elementos.aviso.textContent = "Demonstração: nenhum resultado";
+  } else {
+    elementos.aviso.textContent = filtrosAtivos.length
+      ? `Filtros ativos: ${filtrosAtivos.join(" · ")} · ${projetosFiltrados.length} ${projetosFiltrados.length === 1 ? "resultado" : "resultados"}`
+      : "Visão geral do semestre";
+  }
 }
 
 function limparFiltros() {
+  if (estado.demonstracao === "vazio") {
+    estado.demonstracao = "normal";
+    atualizarBotoesDemonstracao();
+  }
+
   elementos.busca.value = "";
   elementos.area.value = "";
   elementos.situacao.value = "";
@@ -373,6 +387,41 @@ function mostrarErroCarregamento() {
   `;
 }
 
+// Marca o botão que representa o estado exibido no momento.
+function atualizarBotoesDemonstracao() {
+  const botoes = elementos.barraDemonstracao.querySelectorAll("[data-demonstracao]");
+
+  botoes.forEach((botao) => {
+    const selecionado = botao.dataset.demonstracao === estado.demonstracao;
+    botao.setAttribute("aria-pressed", String(selecionado));
+  });
+}
+
+function mudarDemonstracao(valor) {
+  estado.demonstracao = valor;
+  atualizarBotoesDemonstracao();
+
+  if (valor === "carregando") {
+    mostrarCarregamento();
+    return;
+  }
+
+  if (valor === "erro") {
+    encerrarCarregamento();
+    mostrarErroCarregamento();
+    return;
+  }
+
+  if (estado.projetos.length === 0) {
+    carregarDados();
+    return;
+  }
+
+  encerrarCarregamento();
+  mostrarResumo();
+  atualizarPainel();
+}
+
 async function carregarDados() {
   mostrarCarregamento();
 
@@ -385,6 +434,10 @@ async function carregarDados() {
 
     const dados = await resposta.json();
     validarDados(dados);
+
+    // Evita que uma busca já iniciada troque o estado escolhido na barra.
+    if (estado.demonstracao === "carregando" || estado.demonstracao === "erro") return;
+
     estado.projetos = dados.projetos;
     estado.inscricoes = dados.inscricoes;
     estado.projetoSelecionado = null;
@@ -410,6 +463,8 @@ elementos.lista.addEventListener("click", (evento) => {
   const acao = evento.target.closest("[data-acao]");
 
   if (acao?.dataset.acao === "tentar-novamente") {
+    estado.demonstracao = "normal";
+    atualizarBotoesDemonstracao();
     carregarDados();
     return;
   }
@@ -434,4 +489,11 @@ elementos.lista.addEventListener("click", (evento) => {
   novoBotao?.focus();
 });
 
+elementos.barraDemonstracao.addEventListener("click", (evento) => {
+  const botao = evento.target.closest("[data-demonstracao]");
+
+  if (botao) mudarDemonstracao(botao.dataset.demonstracao);
+});
+
+atualizarBotoesDemonstracao();
 carregarDados();

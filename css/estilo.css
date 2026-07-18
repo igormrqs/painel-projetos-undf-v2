@@ -629,6 +629,50 @@ select:disabled {
   margin: 0;
 }
 
+/* Barra usada para testar os estados da página durante a apresentação */
+.barra-demonstracao {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 8px 10px;
+  border-radius: 30px;
+  background-color: var(--azul-escuro);
+  box-shadow: 0 10px 28px rgba(15, 38, 64, 0.3);
+  color: var(--branco);
+  transform: translateX(-50%);
+}
+
+.barra-demonstracao > span {
+  margin: 0 6px;
+  color: #c5d6e8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.barra-demonstracao button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #dce7f2;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.barra-demonstracao button[aria-pressed="true"] {
+  background-color: var(--branco);
+  color: var(--azul-escuro);
+}
+
 /* Ajustes para tablet */
 @media (max-width: 900px) {
   .resumo {
@@ -723,5 +767,16 @@ select:disabled {
 
   .projeto-vagas {
     grid-column: 1 / -1;
+  }
+
+  .barra-demonstracao {
+    bottom: 8px;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .barra-demonstracao > span,
+  .barra-demonstracao button {
+    flex: 0 0 auto;
   }
 }
