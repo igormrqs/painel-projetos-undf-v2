@@ -9,7 +9,7 @@ O projeto é um painel para consultar os projetos disponíveis no Laboratório d
 Pelo painel, a pessoa pode:
 
 - acompanhar os principais números do semestre;
-- pesquisar projetos pelo nome;
+- pesquisar usando qualquer informação dos projetos ou das inscrições;
 - filtrar por área e situação;
 - verificar a ocupação das vagas;
 - selecionar um projeto;
@@ -24,7 +24,7 @@ O sistema foi feito como uma página estática. Os dados ficam em um arquivo JSO
 
 - Repositório: [igormrqs/painel-projetos-undf-v2](https://github.com/igormrqs/painel-projetos-undf-v2)
 - Branch principal: `main`
-- Último commit considerado nesta documentação: `72af1ba — atualiza as instruções do projeto`
+- A documentação acompanha a versão atual da branch `main`.
 
 ### Modelos no Figma
 
@@ -161,13 +161,13 @@ No computador, os quatro indicadores aparecem lado a lado. No tablet, aparecem e
 
 Existem três formas de filtrar:
 
-- busca pelo nome;
+- busca pelos dados dos projetos e das inscrições;
 - seleção da área;
 - seleção da situação.
 
 O botão **Limpar** só aparece quando existe algum filtro ativo.
 
-A busca ignora diferenças entre letras maiúsculas, minúsculas e acentos.
+A busca consulta informações como nome, área, situação, curso, turno, contato e data. Ela também ignora diferenças entre letras maiúsculas, minúsculas e acentos.
 
 ### Lista de projetos
 
@@ -283,6 +283,7 @@ O projeto possui:
 - uso de `aria-pressed` nos projetos e botões de demonstração;
 - barras com `role="progressbar"` e valores acessíveis;
 - símbolos acompanhados de texto nos estados vazio e erro;
+- símbolos de dia e noite acompanhados do nome do turno;
 - situações escritas por extenso, sem depender apenas de cores;
 - redução da animação quando o sistema utiliza `prefers-reduced-motion`.
 
@@ -532,7 +533,7 @@ Painel de Projetos
 │   ├── projetos com vagas
 │   └── vagas restantes
 ├── Filtros
-│   ├── busca por nome
+│   ├── busca por projetos e inscrições
 │   ├── área
 │   ├── situação
 │   └── limpar filtros
@@ -595,7 +596,7 @@ O arquivo `dados/projetos.json` possui dois conjuntos: `projetos` e `inscricoes`
 | Campo | Tipo | Uso |
 |---|---|---|
 | `id` | número inteiro | identifica o projeto e cria a relação com as inscrições |
-| `nome` | texto | nome apresentado na lista e usado na busca |
+| `nome` | texto | nome apresentado na lista e consultado pela busca |
 | `area` | texto | preenche o filtro de área |
 | `totalVagas` | número inteiro | informa o limite de vagas |
 | `inscricoesRecebidas` | número inteiro | registra a quantidade de inscrições do projeto |
@@ -611,10 +612,12 @@ O arquivo `dados/projetos.json` possui dois conjuntos: `projetos` e `inscricoes`
 | `email` | texto | contato fictício armazenado no mock |
 | `telefone` | texto | contato fictício no formato `(61) 90000-0000` |
 | `curso` | texto | curso apresentado nos detalhes |
-| `turno` | texto | turno apresentado nos detalhes |
+| `turno` | texto | turno apresentado nos detalhes com símbolo de dia ou noite |
 | `data` | texto no formato `AAAA-MM-DD` | data de cadastro |
 
 Os contatos usam `example.com` e números de demonstração. Eles não representam pessoas reais.
+
+Todos os campos dos projetos e das inscrições participam da busca. Quando uma informação de uma pessoa inscrita corresponde ao termo digitado, o painel mostra o projeto relacionado a ela.
 
 A lista exibida na tela é criada a partir do JSON. Por isso, um novo projeto pode ser acrescentado sem criar um novo bloco no HTML ou alterar a estrutura do JavaScript. A validação também confere campos, tipos, IDs, contatos repetidos, datas, relações, vagas e situação.
 
