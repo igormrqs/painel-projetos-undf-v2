@@ -40,6 +40,15 @@ function prepararPesquisa(texto) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+// Reúne as informações do projeto e de seus inscritos para a busca.
+function montarTextoPesquisa(projeto) {
+  const dadosDoProjeto = Object.values(projeto);
+  const dadosDosInscritos = pegarInscritos(projeto.id)
+    .flatMap((inscrito) => Object.values(inscrito));
+
+  return prepararPesquisa([...dadosDoProjeto, ...dadosDosInscritos].join(" "));
+}
+
 // Mantém o carregamento visível por tempo suficiente para ser percebido.
 function esperar(tempo) {
   return new Promise((resolver) => setTimeout(resolver, tempo));
@@ -136,11 +145,11 @@ function filtrarProjetos() {
 
   const projetosFiltrados = estado.projetos
     .filter((projeto) => {
-      const nomeCombina = prepararPesquisa(projeto.nome).includes(textoBuscado);
+      const buscaCombina = montarTextoPesquisa(projeto).includes(textoBuscado);
       const areaCombina = !elementos.area.value || projeto.area === elementos.area.value;
       const situacaoCombina = !elementos.situacao.value || projeto.situacao === elementos.situacao.value;
 
-      return nomeCombina && areaCombina && situacaoCombina;
+      return buscaCombina && areaCombina && situacaoCombina;
     })
     .sort((primeiro, segundo) => {
       const diferencaSituacao = ordemSituacoes[primeiro.situacao] - ordemSituacoes[segundo.situacao];

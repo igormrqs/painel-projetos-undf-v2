@@ -15,7 +15,7 @@ O endereço público do site será acrescentado depois da configuração do GitH
 ## O que é possível fazer
 
 - ver um resumo das vagas e inscrições;
-- pesquisar um projeto pelo nome;
+- pesquisar por qualquer informação dos projetos e das inscrições;
 - filtrar os projetos por área e situação;
 - acompanhar a ocupação das vagas;
 - selecionar um projeto para ver seus inscritos;
