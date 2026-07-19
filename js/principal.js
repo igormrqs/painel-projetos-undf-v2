@@ -72,6 +72,13 @@ function formatarData(data) {
   return dataCompleta.toLocaleDateString("pt-BR");
 }
 
+function criarTurno(turno) {
+  const simbolo = prepararPesquisa(turno) === "noturno" ? "☾" : "☀";
+  const texto = protegerTexto(turno);
+
+  return `<strong class="turno" aria-label="${texto}"><span class="turno-simbolo" aria-hidden="true">${simbolo}</span><span class="turno-texto">${texto}</span></strong>`;
+}
+
 function criarBarra(projeto) {
   const inscritos = pegarInscritos(projeto.id).length;
   const porcentagem = Math.min((inscritos / projeto.totalVagas) * 100, 100);
@@ -241,7 +248,7 @@ function mostrarDetalhes(projetoId) {
             <span>${protegerTexto(inscrito.curso)}</span>
           </div>
           <div class="inscrito-data">
-            <strong>${protegerTexto(inscrito.turno)}</strong>
+            ${criarTurno(inscrito.turno)}
             <span>${formatarData(inscrito.data)}</span>
           </div>
         </div>

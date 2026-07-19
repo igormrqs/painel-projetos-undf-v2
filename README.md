@@ -55,6 +55,7 @@ O painel possui alguns cuidados para facilitar a navegação:
 - textos que informam mudanças nos filtros e no carregamento;
 - barras de ocupação identificadas para leitores de tela;
 - símbolos acompanhados de texto nos estados vazio e de erro;
+- símbolo de dia ou noite acompanhado do nome de cada turno;
 - animação de carregamento desativada quando o sistema pede menos movimento.
 
 ## Organização das pastas

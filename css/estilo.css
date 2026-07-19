@@ -503,6 +503,28 @@ select:disabled {
   text-align: right;
 }
 
+.inscrito-data .turno {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.inscrito-data .turno-simbolo,
+.inscrito-data .turno-texto {
+  display: inline;
+  color: inherit;
+}
+
+.inscrito-data .turno-simbolo {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.inscrito-data .turno-texto {
+  font-size: 13px;
+}
+
 .mensagem {
   margin: 40px auto;
   max-width: 340px;
