@@ -1,9 +1,10 @@
+const ATRASO_CARREGAMENTO = 1200;
+
 // Dados que a página usa enquanto está aberta.
 const estado = {
   projetos: [],
   inscricoes: [],
   projetoSelecionado: null,
-  carregando: true,
   demonstracao: "normal"
 };
 
@@ -37,6 +38,16 @@ function prepararPesquisa(texto) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+}
+
+// Mantém o carregamento visível por tempo suficiente para ser percebido.
+function esperar(tempo) {
+  return new Promise((resolver) => setTimeout(resolver, tempo));
+}
+
+async function completarTempoDeCarregamento(inicio) {
+  const tempoRestante = Math.max(ATRASO_CARREGAMENTO - (Date.now() - inicio), 0);
+  await esperar(tempoRestante);
 }
 
 function pegarInscritos(projetoId) {
@@ -77,7 +88,7 @@ function criarEtiqueta(situacao) {
 
 // Calcula os números mostrados no começo da página.
 function mostrarResumo() {
-  const projetosAbertos = estado.projetos.filter((projeto) => projeto.situacao !== "encerrado");
+  const projetosAbertos = estado.projetos.filter((projeto) => projeto.situacao !== "projeto encerrado");
   const projetosComVagas = estado.projetos.filter((projeto) => projeto.situacao === "com vagas");
 
   const vagasLivres = projetosComVagas.reduce((total, projeto) => {
@@ -120,7 +131,7 @@ function filtrarProjetos() {
   const ordemSituacoes = {
     "com vagas": 1,
     "vagas esgotadas": 2,
-    "encerrado": 3
+    "projeto encerrado": 3
   };
 
   const projetosFiltrados = estado.projetos
@@ -298,7 +309,6 @@ function bloquearFiltros(bloqueado) {
 
 // Mostra formas simples no lugar do conteúdo enquanto o JSON é aberto.
 function mostrarCarregamento() {
-  estado.carregando = true;
   bloquearFiltros(true);
   elementos.limpar.hidden = true;
 
@@ -334,7 +344,6 @@ function mostrarCarregamento() {
 }
 
 function encerrarCarregamento() {
-  estado.carregando = false;
   bloquearFiltros(false);
 
   elementos.resumo.setAttribute("aria-busy", "false");
@@ -342,22 +351,97 @@ function encerrarCarregamento() {
   elementos.detalhes.setAttribute("aria-busy", "false");
 }
 
-// Confere o básico antes de usar as informações do arquivo.
+function textoPreenchido(valor) {
+  return typeof valor === "string" && valor.trim() !== "";
+}
+
+function dataValida(data) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) return false;
+
+  const [ano, mes, dia] = data.split("-").map(Number);
+  const dataConferida = new Date(Date.UTC(ano, mes - 1, dia));
+
+  return dataConferida.getUTCFullYear() === ano
+    && dataConferida.getUTCMonth() === mes - 1
+    && dataConferida.getUTCDate() === dia;
+}
+
+// Confere os campos e as relações antes de mostrar os dados.
 function validarDados(dados) {
   if (!dados || !Array.isArray(dados.projetos) || !Array.isArray(dados.inscricoes)) {
     throw new Error("O arquivo de dados está incompleto.");
   }
 
+  const situacoesPermitidas = ["com vagas", "vagas esgotadas", "projeto encerrado"];
+
   const projetoInvalido = dados.projetos.some((projeto) => (
-    projeto.id == null || !projeto.nome || !projeto.area || !projeto.totalVagas || !projeto.situacao
+    !Number.isInteger(projeto.id)
+    || !textoPreenchido(projeto.nome)
+    || !textoPreenchido(projeto.area)
+    || !Number.isInteger(projeto.totalVagas)
+    || projeto.totalVagas <= 0
+    || !Number.isInteger(projeto.inscricoesRecebidas)
+    || projeto.inscricoesRecebidas < 0
+    || !situacoesPermitidas.includes(projeto.situacao)
   ));
 
   const inscricaoInvalida = dados.inscricoes.some((inscricao) => (
-    inscricao.id == null || inscricao.projetoId == null || !inscricao.nome
+    !Number.isInteger(inscricao.id)
+    || !Number.isInteger(inscricao.projetoId)
+    || !textoPreenchido(inscricao.nome)
+    || !textoPreenchido(inscricao.email)
+    || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inscricao.email)
+    || !/^\(\d{2}\) 9\d{4}-\d{4}$/.test(inscricao.telefone)
+    || !textoPreenchido(inscricao.curso)
+    || !textoPreenchido(inscricao.turno)
+    || !textoPreenchido(inscricao.data)
+    || !dataValida(inscricao.data)
   ));
 
   if (projetoInvalido || inscricaoInvalida) {
     throw new Error("Existem projetos ou inscrições com informações faltando.");
+  }
+
+  const idsProjetos = dados.projetos.map((projeto) => projeto.id);
+  const idsInscricoes = dados.inscricoes.map((inscricao) => inscricao.id);
+  const emails = dados.inscricoes.map((inscricao) => inscricao.email);
+  const telefones = dados.inscricoes.map((inscricao) => inscricao.telefone);
+
+  const existeDuplicidade = new Set(idsProjetos).size !== idsProjetos.length
+    || new Set(idsInscricoes).size !== idsInscricoes.length
+    || new Set(emails).size !== emails.length
+    || new Set(telefones).size !== telefones.length;
+
+  if (existeDuplicidade) {
+    throw new Error("Existem identificadores ou contatos repetidos.");
+  }
+
+  const inscricaoSemProjeto = dados.inscricoes.some(
+    (inscricao) => !idsProjetos.includes(inscricao.projetoId)
+  );
+
+  if (inscricaoSemProjeto) {
+    throw new Error("Existe uma inscrição sem projeto correspondente.");
+  }
+
+  const ocupacaoInvalida = dados.projetos.some((projeto) => {
+    const quantidade = dados.inscricoes.filter(
+      (inscricao) => inscricao.projetoId === projeto.id
+    ).length;
+
+    if (quantidade !== projeto.inscricoesRecebidas || quantidade > projeto.totalVagas) {
+      return true;
+    }
+
+    if (projeto.situacao === "com vagas" && quantidade >= projeto.totalVagas) {
+      return true;
+    }
+
+    return projeto.situacao === "vagas esgotadas" && quantidade !== projeto.totalVagas;
+  });
+
+  if (ocupacaoInvalida) {
+    throw new Error("A quantidade de inscrições não combina com as vagas ou a situação.");
   }
 }
 
@@ -387,6 +471,8 @@ function mostrarErroCarregamento() {
   elementos.detalhes.innerHTML = `
     <p class="mensagem erro">Os detalhes ficarão disponíveis quando os dados forem carregados.</p>
   `;
+
+  elementos.lista.querySelector("[data-acao='tentar-novamente']")?.focus();
 }
 
 // Marca o botão que representa o estado exibido no momento.
@@ -425,6 +511,7 @@ function mudarDemonstracao(valor) {
 }
 
 async function carregarDados() {
+  const inicioCarregamento = Date.now();
   mostrarCarregamento();
 
   try {
@@ -436,6 +523,7 @@ async function carregarDados() {
 
     const dados = await resposta.json();
     validarDados(dados);
+    await completarTempoDeCarregamento(inicioCarregamento);
 
     // Evita que uma busca já iniciada troque o estado escolhido na barra.
     if (estado.demonstracao === "carregando" || estado.demonstracao === "erro") return;
@@ -449,6 +537,10 @@ async function carregarDados() {
     preencherAreas();
     atualizarPainel();
   } catch (erro) {
+    await completarTempoDeCarregamento(inicioCarregamento);
+
+    if (estado.demonstracao === "carregando") return;
+
     encerrarCarregamento();
     mostrarErroCarregamento();
   }

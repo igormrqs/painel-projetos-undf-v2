@@ -6,8 +6,9 @@
   --fundo: #f3f6f9;
   --branco: #ffffff;
   --texto: #243447;
-  --texto-claro: #68788a;
+  --texto-claro: #596a7c;
   --borda: #dce4ec;
+  --borda-campo: #7d90a4;
   --verde: #237a4b;
   --verde-claro: #e7f5ed;
   --amarelo: #8a6000;
@@ -24,7 +25,6 @@
 
 body {
   margin: 0;
-  min-width: 320px;
   background-color: var(--fundo);
   color: var(--texto);
   font-family: "Inter", Arial, sans-serif;
@@ -258,7 +258,7 @@ select:disabled {
   height: 42px;
   padding: 0 12px;
   background-color: var(--branco);
-  border: 1px solid #becbd8;
+  border: 1px solid var(--borda-campo);
   border-radius: 8px;
   color: var(--texto);
   font-size: 14px;
@@ -402,7 +402,7 @@ select:disabled {
   color: var(--amarelo);
 }
 
-.etiqueta.encerrado {
+.etiqueta.projeto-encerrado {
   background-color: var(--cinza-claro);
   color: #596572;
 }
@@ -568,11 +568,6 @@ select:disabled {
 
 .botao-tentar:hover {
   background-color: #84302b;
-}
-
-.botao-tentar:focus {
-  outline: 3px solid rgba(168, 59, 53, 0.25);
-  outline-offset: 2px;
 }
 
 /* Formas exibidas enquanto os dados estão carregando */

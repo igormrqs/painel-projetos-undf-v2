@@ -2,6 +2,16 @@
 
 Este projeto apresenta os projetos disponíveis no Laboratório de Inovação Digital da UnDF. Os dados são lidos de um arquivo JSON e exibidos em um painel simples para consulta.
 
+Os nomes, e-mails e telefones usados na demonstração são fictícios. Os e-mails utilizam o domínio reservado `example.com`.
+
+## Links
+
+- [Repositório no GitHub](https://github.com/igormrqs/painel-projetos-undf-v2)
+- [Wireframes no Figma](https://www.figma.com/design/DYymTrvRTokcZHcvXSeIKD/Problema-3---Painel-Institucional-UnDF---Wireframe-UX?node-id=29-2)
+- [Alta fidelidade no Figma](https://www.figma.com/design/PZYaysxMxybv0QleqMj6Oo/Problema-3---Painel-Institucional-UnDF---Alta-Fidelidade?node-id=55-2)
+
+O endereço público do site será acrescentado depois da configuração do GitHub Pages.
+
 ## O que é possível fazer
 
 - ver um resumo das vagas e inscrições;
@@ -34,6 +44,8 @@ Na parte inferior da página existe uma barra chamada **Testar tela**. Ela permi
 
 Essa barra ajuda durante a apresentação e também facilita a conferência de cada estado da página.
 
+No carregamento normal, o painel mantém o skeleton visível por pelo menos 1,2 segundo antes de mostrar os dados.
+
 ## Acessibilidade
 
 O painel possui alguns cuidados para facilitar a navegação:
@@ -50,6 +62,8 @@ O painel possui alguns cuidados para facilitar a navegação:
 ```text
 painel-projetos-undf-v2/
 ├── index.html
+├── README.md
+├── DOCUMENTACAO_DO_PROJETO.md
 ├── css/
 │   └── estilo.css
 ├── js/
