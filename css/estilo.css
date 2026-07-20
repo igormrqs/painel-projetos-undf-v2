@@ -173,6 +173,10 @@ select:disabled {
   font-weight: 600;
 }
 
+.aviso:empty {
+  display: none;
+}
+
 .aviso.erro {
   color: var(--vermelho);
 }

@@ -294,12 +294,14 @@ function atualizarPainel() {
   mostrarDetalhes(estado.projetoSelecionado);
 
   elementos.limpar.hidden = filtrosAtivos.length === 0;
+  elementos.aviso.classList.remove("erro");
+
   if (estado.demonstracao === "vazio") {
     elementos.aviso.textContent = "Demonstração: nenhum resultado";
   } else {
     elementos.aviso.textContent = filtrosAtivos.length
       ? `Filtros ativos: ${filtrosAtivos.join(" · ")} · ${projetosFiltrados.length} ${projetosFiltrados.length === 1 ? "resultado" : "resultados"}`
-      : "Visão geral do semestre";
+      : "";
   }
 }
 
