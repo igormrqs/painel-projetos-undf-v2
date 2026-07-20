@@ -1,4 +1,4 @@
-# Documentação do projeto — Painel de Projetos da UnDF
+# Documentação — Painel de Projetos da UnDF
 
 Documento atualizado em **19 de julho de 2026**.
 
@@ -51,7 +51,7 @@ O projeto não utiliza bibliotecas JavaScript, banco de dados ou processo de ins
 painel-projetos-undf-v2/
 ├── index.html
 ├── README.md
-├── DOCUMENTACAO_DO_PROJETO.md
+├── DOCUMENTACAO.md
 ├── css/
 │   └── estilo.css
 ├── js/

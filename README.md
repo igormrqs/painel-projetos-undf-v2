@@ -63,7 +63,7 @@ O painel possui alguns cuidados para facilitar a navegação:
 painel-projetos-undf-v2/
 ├── index.html
 ├── README.md
-├── DOCUMENTACAO_DO_PROJETO.md
+├── DOCUMENTACAO.md
 ├── css/
 │   └── estilo.css
 ├── js/
