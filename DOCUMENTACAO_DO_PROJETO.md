@@ -708,16 +708,15 @@ Depois dos quatro registros, preencher:
 
 ## 20. Situação do GitHub e do deploy
 
-Na revisão feita em 19 de julho de 2026:
+Na revisão final feita em 20 de julho de 2026:
 
-- a branch principal era `main`;
-- o código local e remoto estavam no commit `72af1ba`;
-- o repositório ainda estava privado;
-- ainda não existia Pull Request;
-- ainda não existia aprovação de outro integrante;
-- o GitHub Pages ainda não estava configurado.
+- a branch principal é `main`;
+- o [repositório no GitHub](https://github.com/igormrqs/painel-projetos-undf-v2) está público;
+- a Pull Request nº 1 foi criada por outro integrante, aprovada e mesclada;
+- o GitHub Pages está configurado a partir da branch `main`;
+- o [site publicado](https://igormrqs.github.io/painel-projetos-undf-v2/) abre normalmente sem exigir login.
 
-Esses itens devem ser atualizados nesta documentação depois que as etapas forem realmente concluídas. Não devem ser marcados como prontos antes de existir evidência no GitHub.
+Também foram conferidos o carregamento, o estado de erro com nova tentativa, o uso em telas menores e a ordem dos controles acessíveis pelo teclado.
 
 ## 21. Roteiro de apresentação — até 10 minutos
 
@@ -748,17 +747,17 @@ Esses itens devem ser atualizados nesta documentação depois que as etapas fore
 
 ## 23. Checklist final
 
-- [ ] preencher os resultados reais do teste de usabilidade;
-- [ ] revisar o site somente com teclado;
-- [ ] testar zoom de 200%;
-- [ ] conferir o carregamento por pelo menos um segundo;
-- [ ] simular falha real e recuperação;
-- [ ] revisar as telas de 320 px a 1440 px;
-- [ ] tornar o repositório público;
-- [ ] criar Pull Request;
-- [ ] obter revisão e aprovação de outro integrante;
-- [ ] fazer o merge;
-- [ ] configurar o GitHub Pages;
-- [ ] registrar a URL pública no README e neste documento;
-- [ ] abrir o deploy em janela anônima;
+- [x] preencher os resultados reais do teste de usabilidade;
+- [x] revisar o site somente com teclado;
+- [x] testar zoom de 200%;
+- [x] conferir o carregamento por pelo menos um segundo;
+- [x] simular falha real e recuperação;
+- [x] revisar as telas de 320 px a 1440 px;
+- [x] tornar o repositório público;
+- [x] criar Pull Request;
+- [x] obter revisão e aprovação de outro integrante;
+- [x] fazer o merge;
+- [x] configurar o GitHub Pages;
+- [x] registrar a URL pública no README e neste documento;
+- [x] abrir o deploy em janela anônima;
 - [ ] ensaiar a apresentação em até 10 minutos.
