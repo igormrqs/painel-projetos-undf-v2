@@ -137,7 +137,7 @@ Dentro de cada situação, os nomes são organizados em ordem alfabética.
 
 ### Cabeçalho
 
-O cabeçalho apresenta:
+O cabeçalho reúne:
 
 - logo clean da UnDF;
 - três losangos azuis;
@@ -337,7 +337,7 @@ As cores ficam no começo de `css/estilo.css`, dentro de `:root`.
 
 ### Wireframes
 
-O arquivo de wireframes apresenta a estrutura da experiência com menos detalhes visuais.
+O arquivo de wireframes mostra a estrutura da experiência com menos detalhes visuais.
 
 Ele contém versões de computador e celular para:
 
@@ -444,20 +444,7 @@ O projeto é uma demonstração local. Atualmente ele não possui:
 
 As informações mudam quando o arquivo `dados/projetos.json` é editado.
 
-## 16. Roteiro curto para apresentação
-
-1. Explicar que o painel reúne projetos e inscrições do laboratório.
-2. Mostrar os quatro números do resumo.
-3. Pesquisar um projeto.
-4. Aplicar os filtros de área e situação.
-5. Selecionar um cartão e mostrar os detalhes.
-6. Explicar as etiquetas e barras de ocupação.
-7. Usar a barra Testar tela para mostrar carregamento, lista vazia e erro.
-8. Demonstrar a navegação por teclado.
-9. Mostrar os wireframes e a alta fidelidade no Figma.
-10. Mostrar o histórico gradual de commits no GitHub.
-
-## 17. Comandos úteis do Git
+## 16. Comandos úteis do Git
 
 Ver o estado atual:
 
@@ -489,15 +476,15 @@ Clonar o repositório em outro computador:
 git clone https://github.com/igormrqs/painel-projetos-undf-v2.git
 ```
 
-## 18. Especificação de design UX
+## 17. Especificação de design UX
 
-### 18.1 Usuária e problema
+### 17.1 Usuária e problema
 
-A construção abaixo segue a ideia de persona comportamental apresentada por [Nielsen (2013)](https://ixdf.org/literature/book/the-encyclopedia-of-human-computer-interaction-2nd-ed/personas). O nome serve apenas para tornar a usuária fácil de lembrar; as decisões de design vêm de seu comportamento, contexto, necessidades e relação com a tecnologia.
+A construção abaixo segue a ideia de persona comportamental descrita por [Nielsen (2013)](https://ixdf.org/literature/book/the-encyclopedia-of-human-computer-interaction-2nd-ed/personas). O nome serve apenas para tornar a usuária fácil de lembrar; as decisões de design vêm de seu comportamento, contexto, necessidades e relação com a tecnologia.
 
 #### Base dos dados e situação da persona
 
-**Renata é uma persona provisória.** Ela foi criada a partir do problema proposto, do fluxo atual com planilhas e das informações que o painel precisa apresentar. Esses dados permitem formar uma hipótese de uso, mas ainda não substituem uma entrevista ou observação de uma coordenadora real.
+**Renata é uma persona provisória.** Ela foi criada a partir do problema proposto, do fluxo atual com planilhas e das informações que o painel precisa exibir. Esses dados permitem formar uma hipótese de uso, mas ainda não substituem uma entrevista ou observação de uma coordenadora real.
 
 O teste de usabilidade com Angela e Marcos ajudou a identificar problemas de entendimento da interface, como a abrangência da busca e a localização do turno. Como nenhum dos dois exerce a função de coordenador, esse teste melhora a tela, mas não valida sozinho o comportamento atribuído a Renata.
 
@@ -545,7 +532,7 @@ Para validar a persona, o próximo passo é conversar com pelo menos uma coorden
 
 Se esses dados contradisserem algum ponto, a persona e as prioridades da interface devem ser atualizadas. Assim, Renata permanece um instrumento de decisão, não uma biografia definitiva.
 
-### 18.2 Arquitetura da Informação
+### 17.2 Arquitetura da Informação
 
 ```text
 Painel de Projetos
@@ -599,11 +586,11 @@ Painel de Projetos
 | Filtro sem resultado | símbolo, explicação e botão de limpeza | mudar a busca ou limpar os filtros |
 | Erro | indicadores indisponíveis, explicação e nova tentativa | conferir a conexão e tentar novamente |
 
-### 18.3 Decisões de design
+### 17.3 Decisões de design
 
 | Decisão | Motivo e problema atendido | Usabilidade, acessibilidade e responsividade |
 |---|---|---|
-| Quatro indicadores no começo | evita contagens manuais e apresenta a situação geral | textos curtos; reorganização em duas ou uma coluna |
+| Quatro indicadores no começo | evita contagens manuais e mostra a situação geral | textos curtos; reorganização em duas ou uma coluna |
 | Filtros próximos da lista | diminui o caminho entre a busca e o resultado | labels visíveis e controles nativos de formulário |
 | Projeto inteiro como botão | aumenta a área de clique e deixa a seleção clara | funciona com teclado e possui `aria-pressed` |
 | Situação escrita por extenso | evita depender somente da cor | melhora a leitura para pessoas com dificuldade de distinguir cores |
@@ -613,7 +600,7 @@ Painel de Projetos
 | Mensagens com símbolo e texto | diferencia vazio e erro sem depender apenas da cor | símbolos decorativos ficam ocultos de leitores de tela |
 | Cores no `:root` | facilita mudanças de identidade visual | uma alteração central atualiza toda a página |
 
-### 18.4 Estrutura dos dados
+### 17.4 Estrutura dos dados
 
 O arquivo `dados/projetos.json` possui dois conjuntos: `projetos` e `inscricoes`.
 
@@ -622,7 +609,7 @@ O arquivo `dados/projetos.json` possui dois conjuntos: `projetos` e `inscricoes`
 | Campo | Tipo | Uso |
 |---|---|---|
 | `id` | número inteiro | identifica o projeto e cria a relação com as inscrições |
-| `nome` | texto | nome apresentado na lista e consultado pela busca |
+| `nome` | texto | nome exibido na lista e consultado pela busca |
 | `area` | texto | preenche o filtro de área |
 | `totalVagas` | número inteiro | informa o limite de vagas |
 | `inscricoesRecebidas` | número inteiro | registra a quantidade de inscrições do projeto |
@@ -637,8 +624,8 @@ O arquivo `dados/projetos.json` possui dois conjuntos: `projetos` e `inscricoes`
 | `nome` | texto | identifica a pessoa inscrita |
 | `email` | texto | contato fictício armazenado no mock |
 | `telefone` | texto | contato fictício no formato `(61) 90000-0000` |
-| `curso` | texto | curso apresentado nos detalhes |
-| `turno` | texto | turno apresentado nos detalhes com símbolo de dia ou noite |
+| `curso` | texto | curso exibido nos detalhes |
+| `turno` | texto | turno exibido nos detalhes com símbolo de dia ou noite |
 | `data` | texto no formato `AAAA-MM-DD` | data de cadastro |
 
 Os contatos usam `example.com` e números de demonstração. Eles não representam pessoas reais.
@@ -647,17 +634,17 @@ Todos os campos dos projetos e das inscrições participam da busca. Quando uma 
 
 A lista exibida na tela é criada a partir do JSON. Por isso, um novo projeto pode ser acrescentado sem criar um novo bloco no HTML ou alterar a estrutura do JavaScript. A validação também confere campos, tipos, IDs, contatos repetidos, datas, relações, vagas e situação.
 
-## 19. Teste de usabilidade
+## 18. Teste de usabilidade
 
-### 19.1 Objetivo
+### 18.1 Objetivo
 
 O teste deve verificar se uma pessoa que não participou do projeto consegue entender os indicadores, encontrar um projeto e consultar seus inscritos sem receber orientação durante a tarefa.
 
-### 19.2 Situação atual
+### 18.2 Situação atual
 
 Os resultados ainda precisam ser coletados com duas pessoas fora do grupo. Nenhum tempo, conclusão ou dificuldade foi preenchido antecipadamente.
 
-### 19.3 Participantes
+### 18.3 Participantes
 
 Para preservar a identidade, usar somente os códigos **P1** e **P2**.
 
@@ -666,7 +653,7 @@ Para preservar a identidade, usar somente os códigos **P1** e **P2**.
 | P1 | preencher após o convite | preencher | preencher |
 | P2 | preencher após o convite | preencher | preencher |
 
-### 19.4 Ambiente
+### 18.4 Ambiente
 
 Registrar antes do teste:
 
@@ -678,7 +665,7 @@ Registrar antes do teste:
 - navegador e versão;
 - existência de zoom ou recurso de acessibilidade ativo.
 
-### 19.5 Tarefas
+### 18.5 Tarefas
 
 **Tarefa 1:** encontre os projetos da área Ciência da Computação que ainda possuem vagas e diga quantos projetos aparecem.
 
@@ -686,7 +673,7 @@ Registrar antes do teste:
 
 As tarefas devem ser aplicadas para P1 e P2 sem indicar onde clicar.
 
-### 19.6 Registro dos resultados
+### 18.6 Registro dos resultados
 
 | Participante | Tarefa | Tempo | Concluiu? | Principal ponto de atrito | Observações |
 |---|---|---:|---|---|---|
@@ -695,7 +682,7 @@ As tarefas devem ser aplicadas para P1 e P2 sem indicar onde clicar.
 | P2 | 1 | preencher | preencher | preencher | preencher |
 | P2 | 2 | preencher | preencher | preencher | preencher |
 
-### 19.7 Síntese após o teste
+### 18.7 Síntese após o teste
 
 Depois dos quatro registros, preencher:
 
@@ -706,7 +693,7 @@ Depois dos quatro registros, preencher:
 - melhoria recomendada;
 - alteração feita no projeto ou justificativa para não alterar.
 
-## 20. Situação do GitHub e do deploy
+## 19. Situação do GitHub e do deploy
 
 Na revisão final feita em 20 de julho de 2026:
 
@@ -717,47 +704,3 @@ Na revisão final feita em 20 de julho de 2026:
 - o [site publicado](https://igormrqs.github.io/painel-projetos-undf-v2/) abre normalmente sem exigir login.
 
 Também foram conferidos o carregamento, o estado de erro com nova tentativa, o uso em telas menores e a ordem dos controles acessíveis pelo teclado.
-
-## 21. Roteiro de apresentação — até 10 minutos
-
-| Tempo | Parte |
-|---:|---|
-| 0:00–0:50 | problema atual e persona da coordenadora |
-| 0:50–1:35 | arquitetura da informação e prioridades |
-| 1:35–2:10 | wireframes, alta fidelidade e decisões visuais |
-| 2:10–3:20 | estado normal e indicadores |
-| 3:20–4:30 | busca, filtros combinados e limpeza |
-| 4:30–5:20 | seleção do projeto e consulta aos inscritos |
-| 5:20–6:30 | carregamento, sem resultados e erro real |
-| 6:30–7:15 | tentativa de recuperação |
-| 7:15–8:00 | responsividade e acessibilidade |
-| 8:00–8:45 | resultados do teste de usabilidade |
-| 8:45–9:30 | GitHub, Pull Request e deploy |
-| 9:30–10:00 | encerramento e margem para perguntas |
-
-## 22. Mudanças simples durante a apresentação
-
-- mudar uma cor: bloco `:root` de `css/estilo.css`;
-- mudar um texto fixo: `index.html`;
-- mudar uma mensagem de estado: `js/principal.js`;
-- adicionar um projeto: lista `projetos` de `dados/projetos.json`;
-- alterar vagas: campo `totalVagas` do projeto;
-- alterar a ordem: objeto `ordemSituacoes` de `filtrarProjetos()`;
-- alterar o erro: função `mostrarErroCarregamento()`.
-
-## 23. Checklist final
-
-- [x] preencher os resultados reais do teste de usabilidade;
-- [x] revisar o site somente com teclado;
-- [x] testar zoom de 200%;
-- [x] conferir o carregamento por pelo menos um segundo;
-- [x] simular falha real e recuperação;
-- [x] revisar as telas de 320 px a 1440 px;
-- [x] tornar o repositório público;
-- [x] criar Pull Request;
-- [x] obter revisão e aprovação de outro integrante;
-- [x] fazer o merge;
-- [x] configurar o GitHub Pages;
-- [x] registrar a URL pública no README e neste documento;
-- [x] abrir o deploy em janela anônima;
-- [ ] ensaiar a apresentação em até 10 minutos.

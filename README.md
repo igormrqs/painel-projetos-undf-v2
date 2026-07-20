@@ -1,6 +1,6 @@
 # Painel de projetos da UnDF
 
-Este projeto apresenta os projetos disponíveis no Laboratório de Inovação Digital da UnDF. Os dados são lidos de um arquivo JSON e exibidos em um painel simples para consulta.
+Este projeto reúne os projetos disponíveis no Laboratório de Inovação Digital da UnDF. Os dados são lidos de um arquivo JSON e exibidos em um painel simples para consulta.
 
 Os nomes, e-mails e telefones usados na demonstração são fictícios. Os e-mails utilizam o domínio reservado `example.com`.
 
@@ -41,7 +41,7 @@ Na parte inferior da página existe uma barra chamada **Testar tela**. Ela permi
 - **Sem resultados:** mostra a mensagem usada quando nenhum projeto é encontrado;
 - **Erro:** mostra a mensagem de falha e o botão para tentar novamente.
 
-Essa barra ajuda durante a apresentação e também facilita a conferência de cada estado da página.
+Essa barra facilita a conferência de cada estado da página.
 
 No carregamento normal, o painel mantém o skeleton visível por pelo menos 1,2 segundo antes de mostrar os dados.
 

@@ -675,7 +675,7 @@ select:disabled {
   margin: 0;
 }
 
-/* Barra usada para testar os estados da página durante a apresentação */
+/* Barra usada para testar os estados da página */
 .barra-demonstracao {
   position: fixed;
   bottom: 16px;
