@@ -493,31 +493,57 @@ git clone https://github.com/igormrqs/painel-projetos-undf-v2.git
 
 ### 18.1 Usuária e problema
 
-A persona usada no projeto é uma representação fictícia da coordenadora do Laboratório de Inovação Digital.
+A construção abaixo segue a ideia de persona comportamental apresentada por [Nielsen (2013)](https://ixdf.org/literature/book/the-encyclopedia-of-human-computer-interaction-2nd-ed/personas). O nome serve apenas para tornar a usuária fácil de lembrar; as decisões de design vêm de seu comportamento, contexto, necessidades e relação com a tecnologia.
 
-**Renata, coordenadora do laboratório**, acompanha os projetos do semestre e precisa responder estudantes e professores com rapidez. Ela costuma trabalhar no computador da universidade, mas também consulta informações pelo celular quando está fora da sala.
+#### Base dos dados e situação da persona
 
-Antes de abrir o painel, ela normalmente:
+**Renata é uma persona provisória.** Ela foi criada a partir do problema proposto, do fluxo atual com planilhas e das informações que o painel precisa apresentar. Esses dados permitem formar uma hipótese de uso, mas ainda não substituem uma entrevista ou observação de uma coordenadora real.
 
-1. recebe uma pergunta sobre um projeto ou candidato;
-2. abre uma planilha com várias linhas;
-3. procura o nome do projeto;
-4. aplica filtros manualmente;
-5. conta inscrições e compara o total com as vagas;
-6. abre outras linhas para encontrar os dados dos estudantes.
+O teste de usabilidade com Angela e Marcos ajudou a identificar problemas de entendimento da interface, como a abrangência da busca e a localização do turno. Como nenhum dos dois exerce a função de coordenador, esse teste melhora a tela, mas não valida sozinho o comportamento atribuído a Renata.
 
-Esse processo pode falhar porque a planilha exige muitas etapas, permite contagens incorretas e não destaca rapidamente os projetos com vagas. Como consequência, a coordenadora pode demorar para responder, deixar candidatos sem retorno ou perceber uma vaga disponível tarde demais.
+#### Persona provisória: Renata
 
-Depois de consultar o painel, a expectativa é que ela consiga:
+**Papel e contexto:** Renata coordena o Laboratório de Inovação Digital, acompanha projetos do semestre e responde dúvidas de estudantes e professores. Trabalha principalmente no computador da universidade e pode consultar informações pelo celular quando está fora da sala.
 
-- entender a situação geral em poucos segundos;
-- encontrar um projeto pelo nome;
-- combinar filtros sem fazer contas manuais;
-- verificar ocupação e situação;
-- consultar os inscritos do projeto selecionado;
-- saber o que fazer quando os dados não aparecem.
+**Comportamento:** ela recebe uma pergunta, abre a planilha conhecida, procura o projeto, aplica filtros, confere as inscrições e compara o total com as vagas. Antes de responder, costuma revisar os números para evitar passar uma informação errada.
 
-Essas necessidades definiram as prioridades da interface: resumo primeiro, filtros logo abaixo, projetos em seguida e detalhes sob demanda.
+**Características relevantes:** Renata é organizada e cuidadosa. Prefere processos previsíveis e mantém a planilha porque já conhece sua estrutura, mesmo percebendo que a consulta é lenta. Não precisa de muitos recursos de edição; precisa encontrar uma resposta confiável com poucas etapas.
+
+**Histórico de trabalho:** ela conhece o funcionamento acadêmico dos projetos e sabe interpretar situação, vagas e inscrições. Sua dificuldade não está no conteúdo, mas em localizar e cruzar rapidamente informações espalhadas em muitas linhas.
+
+**Emoções e relação com a tecnologia:** a planilha transmite familiaridade e sensação de controle, mas gera frustração quando uma resposta simples exige filtros, contagens e conferências. Renata tende a aceitar o painel se ele mostrar dados claros, explicar falhas e permitir que ela confirme a informação antes de responder.
+
+#### Situação de uso
+
+Pouco antes de uma reunião, Renata recebe a mensagem de um estudante perguntando se sua inscrição foi registrada e se o projeto ainda possui vagas. Ela tem poucos minutos para responder, está dividindo a atenção com outra atividade e precisa evitar consultar a linha errada ou informar uma contagem desatualizada.
+
+No processo anterior, ela abre a planilha, procura o projeto, aplica filtros, conta inscrições e percorre outras linhas para localizar o estudante. O processo pode falhar quando o filtro permanece ativo, a contagem é feita na coluna errada ou os dados da pessoa ficam longe das informações do projeto.
+
+#### Cenário de uso do painel
+
+1. Renata abre o painel e confirma nos indicadores a situação geral do semestre.
+2. Digita na busca uma informação que possui, como nome do projeto, nome do estudante, curso ou contato.
+3. Usa área e situação quando precisa reduzir os resultados.
+4. Seleciona o projeto e confere ocupação, situação e lista de inscritos.
+5. Verifica curso, turno e data antes de responder ao estudante.
+6. Se os dados não carregarem ou não houver resultado, lê a orientação exibida e decide se deve tentar novamente ou alterar a busca.
+
+#### Decisões de design apoiadas pela persona
+
+| Necessidade observada na hipótese | Decisão adotada no painel |
+|---|---|
+| entender a situação sem abrir várias planilhas | indicadores gerais aparecem primeiro |
+| localizar dados mesmo quando a pergunta chega incompleta | busca consulta atributos de projetos e inscrições |
+| reduzir resultados sem fazer contagens manuais | filtros de área e situação ficam próximos da lista |
+| confirmar antes de responder | projeto e inscritos aparecem juntos, com detalhes sob demanda |
+| perceber vagas e turnos rapidamente | situação e turno usam símbolo acompanhado de texto |
+| confiar no comportamento da página | carregamento, ausência de resultados e erro possuem mensagens próprias |
+
+#### Validação e atualização
+
+Para validar a persona, o próximo passo é conversar com pelo menos uma coordenadora real e observar uma consulta comum. A validação deve confirmar de onde chegam as perguntas, quais dados ela possui no início, quanto tempo tem para responder, onde o processo com planilha falha e o que faz uma ferramenta parecer confiável.
+
+Se esses dados contradisserem algum ponto, a persona e as prioridades da interface devem ser atualizadas. Assim, Renata permanece um instrumento de decisão, não uma biografia definitiva.
 
 ### 18.2 Arquitetura da Informação
 
