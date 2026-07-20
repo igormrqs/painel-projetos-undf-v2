@@ -56,8 +56,10 @@ painel-projetos-undf-v2/
 │   └── estilo.css
 ├── js/
 │   └── principal.js
-└── dados/
-    └── projetos.json
+├── dados/
+│   └── projetos.json
+└── documentacao/
+    └── relatorio_teste_usabilidade.pdf
 ```
 
 ### `index.html`
@@ -636,62 +638,53 @@ A lista exibida na tela é criada a partir do JSON. Por isso, um novo projeto po
 
 ## 18. Teste de usabilidade
 
+O registro completo está no arquivo [Relatório de Teste de Usabilidade](documentacao/relatorio_teste_usabilidade.pdf).
+
 ### 18.1 Objetivo
 
-O teste deve verificar se uma pessoa que não participou do projeto consegue entender os indicadores, encontrar um projeto e consultar seus inscritos sem receber orientação durante a tarefa.
+O teste verificou se pessoas que não participaram do projeto conseguiam entender os indicadores, encontrar projetos e consultar os dados das inscrições sem receber orientação sobre onde clicar.
 
-### 18.2 Situação atual
+### 18.2 Participantes
 
-Os resultados ainda precisam ser coletados com duas pessoas fora do grupo. Nenhum tempo, conclusão ou dificuldade foi preenchido antecipadamente.
+Participaram Angela e Marcos, que não fizeram parte do desenvolvimento e não conheciam previamente o painel.
 
-### 18.3 Participantes
+- Angela possui pouca familiaridade com tecnologia, usa principalmente o celular e utiliza o computador ocasionalmente no trabalho;
+- Marcos possui muita familiaridade com computadores e sistemas digitais;
+- nenhum dos dois possui conhecimento específico sobre gestão de projetos ou inscrições acadêmicas.
 
-Para preservar a identidade, usar somente os códigos **P1** e **P2**.
+Os participantes foram escolhidos por estarem fora da equipe e possuírem níveis diferentes de familiaridade tecnológica.
 
-| Participante | Relação com o grupo | Curso ou contexto | Familiaridade com painéis |
-|---|---|---|---|
-| P1 | preencher após o convite | preencher | preencher |
-| P2 | preencher após o convite | preencher | preencher |
+### 18.3 Procedimento
 
-### 18.4 Ambiente
+Cada participante realizou duas tarefas com limite de 2 minutos. A contagem começou depois da leitura da tarefa e terminou quando todas as respostas foram informadas.
 
-Registrar antes do teste:
+Angela utilizou um notebook com o navegador Chrome. Marcos utilizou um computador desktop com o navegador Brave. Durante as tarefas, eles falaram em voz alta e não receberam orientação sobre onde clicar.
 
-- data e horário;
-- presencial ou remoto;
-- computador ou celular;
-- tamanho aproximado da tela;
-- sistema operacional;
-- navegador e versão;
-- existência de zoom ou recurso de acessibilidade ativo.
+### 18.4 Tarefas
 
-### 18.5 Tarefas
+**Tarefa 1:** informar quantos projetos estavam abertos e quantas inscrições foram recebidas. Depois, encontrar um projeto da área de Ciência da Computação com vagas e informar seu nome e a quantidade de vagas restantes.
 
-**Tarefa 1:** encontre os projetos da área Ciência da Computação que ainda possuem vagas e diga quantos projetos aparecem.
+**Tarefa 2:** localizar o projeto **Laboratório de narrativas públicas** e informar o nome, o curso, o turno e a data de cadastro de uma pessoa inscrita.
 
-**Tarefa 2:** abra o projeto **Acessibilidade digital aplicada** e informe o curso, turno e data de cadastro da primeira pessoa inscrita.
+### 18.5 Resultados
 
-As tarefas devem ser aplicadas para P1 e P2 sem indicar onde clicar.
+| Participante | Tarefa | Tempo | Resultado | Principal observação |
+|---|---:|---:|---|---|
+| Angela | 1 | 43 s | concluiu | tentou pesquisar pela área e teve dúvida sobre a abrangência da busca |
+| Angela | 2 | 50 s | concluiu | demorou para localizar a informação de turno |
+| Marcos | 1 | 13 s | concluiu | realizou a tarefa sem dificuldade |
+| Marcos | 2 | 15 s | concluiu | realizou a tarefa sem hesitação e sugeriu uma versão escura |
 
-### 18.6 Registro dos resultados
+### 18.6 Síntese e mudanças realizadas
 
-| Participante | Tarefa | Tempo | Concluiu? | Principal ponto de atrito | Observações |
-|---|---|---:|---|---|---|
-| P1 | 1 | preencher | preencher | preencher | preencher |
-| P1 | 2 | preencher | preencher | preencher | preencher |
-| P2 | 1 | preencher | preencher | preencher | preencher |
-| P2 | 2 | preencher | preencher | preencher | preencher |
+As quatro tarefas foram concluídas dentro do tempo máximo, resultando em uma taxa de conclusão de 100%. O tempo médio geral foi de 30,25 segundos por tarefa.
 
-### 18.7 Síntese após o teste
+As observações levaram a duas mudanças no projeto:
 
-Depois dos quatro registros, preencher:
+- a busca passou a consultar diferentes atributos dos projetos e das inscrições;
+- o turno recebeu um símbolo de dia ou noite acompanhado do texto correspondente.
 
-- quantas tarefas foram concluídas;
-- tempo médio de cada tarefa;
-- dificuldade que apareceu mais vezes;
-- diferença entre computador e celular, se houver;
-- melhoria recomendada;
-- alteração feita no projeto ou justificativa para não alterar.
+A sugestão de uma versão escura foi registrada como uma possível melhoria futura.
 
 ## 19. Situação do GitHub e do deploy
 

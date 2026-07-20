@@ -68,8 +68,10 @@ painel-projetos-undf-v2/
 │   └── estilo.css
 ├── js/
 │   └── principal.js
-└── dados/
-    └── projetos.json
+├── dados/
+│   └── projetos.json
+└── documentacao/
+    └── relatorio_teste_usabilidade.pdf
 ```
 
 ## Tecnologias usadas
